@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+const KAppGlobalColor = Color.fromRGBO(3, 9, 23, 1);
+const KBlueColor = Color(0xFF090e42);
+const KPinkColor = Color(0xFFff6b80);
+
 const kSendButtonTextStyle = TextStyle(
   color: Colors.lightBlueAccent,
   fontWeight: FontWeight.bold,
