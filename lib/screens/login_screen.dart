@@ -1,11 +1,14 @@
+import 'package:mood_frontend/screens/registration_screen.dart';
 import 'package:mood_frontend/widgets/button_form.dart';
 import 'package:mood_frontend/widgets/form_caption_link.dart';
 import 'package:mood_frontend/widgets/form_container.dart';
 import 'package:mood_frontend/widgets/hero_text.dart';
 import 'package:mood_frontend/widgets/input_field_form.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class LoginScreen extends StatelessWidget {
+  static String id = 'login_screen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +21,7 @@ class LoginScreen extends StatelessWidget {
           children: <Widget>[
             HeroText(
               animationDelay: 1.2,
-              heroText: 'Login',
+              heroText: ["Login"],
               heroTextSize: 40.0,
             ),
             SizedBox(
@@ -60,7 +63,13 @@ class LoginScreen extends StatelessWidget {
                 textSize: 14.0,
                 linkText: 'Sign up',
                 onLinkTap: () {
-                  print('clicked');
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.fade,
+                      child: RegistrationScreen(),
+                    ),
+                  );
                 },
               ),
             )

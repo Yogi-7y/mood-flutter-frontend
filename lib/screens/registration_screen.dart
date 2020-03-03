@@ -1,95 +1,88 @@
+import 'package:mood_frontend/screens/login_screen.dart';
+import 'package:mood_frontend/widgets/button_form.dart';
+import 'package:mood_frontend/widgets/form_caption_link.dart';
+import 'package:mood_frontend/widgets/form_container.dart';
+import 'package:mood_frontend/widgets/hero_text.dart';
+import 'package:mood_frontend/widgets/input_field_form.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
-}
-
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class RegistrationScreen extends StatelessWidget {
+  static String id = 'registration_screen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.0),
+      backgroundColor: Color.fromRGBO(3, 9, 23, 1),
+      body: Container(
+        padding: EdgeInsets.all(30),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              height: 200.0,
-              child: Image.asset('images/logo.png'),
+            HeroText(
+              animationDelay: 1.2,
+              heroText: ['Sign Up..'],
+              heroTextSize: 40.0,
             ),
             SizedBox(
-              height: 48.0,
+              height: 30,
             ),
-            TextField(
-              onChanged: (value) {
-                //Do something with the user input.
-              },
-              decoration: InputDecoration(
-                hintText: 'Enter your email',
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 8.0,
-            ),
-            TextField(
-              onChanged: (value) {
-                //Do something with the user input.
-              },
-              decoration: InputDecoration(
-                hintText: 'Enter your password',
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 24.0,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                elevation: 5.0,
-                child: MaterialButton(
-                  onPressed: () {
-                    //Implement registration functionality.
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Register',
-                    style: TextStyle(color: Colors.white),
+            FormContainer(
+              animationDelay: 1.5,
+              formBorderRadius: 10.0,
+              formPadding: 10.0,
+              child: Column(
+                children: <Widget>[
+                  InputFieldForm(
+                    hint: 'Username',
+                    border: Border(
+                      bottom: BorderSide(color: Colors.grey[300]),
+                    ),
                   ),
-                ),
+                  InputFieldForm(
+                    hint: 'Email or Phone number',
+                    border: Border(
+                      bottom: BorderSide(color: Colors.grey[300]),
+                    ),
+                  ),
+                  InputFieldForm(
+                    hint: 'Password',
+                    border: Border(
+                      bottom: BorderSide(color: Colors.grey[300]),
+                    ),
+                  ),
+                  InputFieldForm(
+                    hint: 'Confirm Password',
+                  ),
+                ],
               ),
             ),
+            SizedBox(
+              height: 40,
+            ),
+            ButtonForm(
+              animationDelay: 1.8,
+              buttonText: 'Sign up',
+              buttonWidth: 120.0,
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
+            Center(
+              child: CaptionLinkForm(
+                animationDelay: 1.8,
+                text: 'Already have an account?',
+                textSize: 14.0,
+                linkText: 'Sign in',
+                onLinkTap: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade, child: LoginScreen()),
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),

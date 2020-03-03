@@ -7,12 +7,12 @@ import 'screens/splash_screen.dart';
 void main() => runApp(
       MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: 'splash_screen',
+        initialRoute: SplashScreen.id,
         routes: {
-          'splash_screen': (context) => SplashScreen(),
-          'login_screen': (context) => LoginScreen(),
-          'registration_screen': (context) => RegistrationScreen(),
-          'chat_screen': (context) => ChatScreen(),
+          SplashScreen.id: (context) => SplashScreen(),
+          LoginScreen.id: (context) => LoginScreen(),
+          RegistrationScreen.id: (context) => RegistrationScreen(),
+          ChatScreen.id: (context) => ChatScreen(),
         },
       ),
     );

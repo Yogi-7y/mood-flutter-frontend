@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import '../animations/fade_animations.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class HeroText extends StatelessWidget {
   final double animationDelay;
-  final String heroText;
+  final List heroText;
   final double heroTextSize;
 
   HeroText({this.animationDelay, this.heroText, this.heroTextSize});
@@ -11,9 +12,11 @@ class HeroText extends StatelessWidget {
   Widget build(BuildContext context) {
     return FadeAnimation(
       animationDelay,
-      Text(
-        heroText,
-        style: TextStyle(
+      ColorizeAnimatedTextKit(
+        colors: [Colors.white, Colors.blue],
+        alignment: AlignmentDirectional.topStart,
+        text: heroText,
+        textStyle: TextStyle(
             color: Colors.white,
             fontSize: heroTextSize,
             fontWeight: FontWeight.bold),

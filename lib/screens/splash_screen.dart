@@ -6,6 +6,7 @@ import 'package:page_transition/page_transition.dart';
 import '../animations/fade_animations.dart';
 
 class SplashScreen extends StatefulWidget {
+  static String id = 'splash_screen';
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -124,61 +125,59 @@ class _SplashScreenState extends State<SplashScreen>
                     height: 120,
                   ),
                   FadeAnimation(
-                      1.6,
-                      AnimatedBuilder(
-                        animation: _scaleController,
-                        builder: (context, child) => Transform.scale(
-                            scale: _scaleAnimation.value,
-                            child: Center(
-                              child: AnimatedBuilder(
-                                animation: _widthController,
-                                builder: (context, child) => Container(
-                                  width: _widthAnimation.value,
-                                  height: 80,
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: Colors.blue.withOpacity(.4)),
-                                  child: InkWell(
-                                    onTap: () {
-                                      _scaleController.forward();
-                                    },
-                                    child: Stack(children: <Widget>[
-                                      AnimatedBuilder(
-                                        animation: _positionController,
-                                        builder: (context, child) => Positioned(
-                                          left: _positionAnimation.value,
-                                          child: AnimatedBuilder(
-                                            animation: _scale2Controller,
-                                            builder: (context, child) =>
-                                                Transform.scale(
-                                                    scale:
-                                                        _scale2Animation.value,
-                                                    child: Container(
-                                                      width: 60,
-                                                      height: 60,
-                                                      decoration: BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color: Colors.blue),
-                                                      child: hideIcon == false
-                                                          ? Icon(
-                                                              Icons
-                                                                  .arrow_forward,
-                                                              color:
-                                                                  Colors.white,
-                                                            )
-                                                          : Container(),
-                                                    )),
+                    1.6,
+                    AnimatedBuilder(
+                      animation: _scaleController,
+                      builder: (context, child) => Transform.scale(
+                          scale: _scaleAnimation.value,
+                          child: Center(
+                            child: AnimatedBuilder(
+                              animation: _widthController,
+                              builder: (context, child) => Container(
+                                width: _widthAnimation.value,
+                                height: 80,
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.blue.withOpacity(.4)),
+                                child: InkWell(
+                                  onTap: () {
+                                    _scaleController.forward();
+                                  },
+                                  child: Stack(children: <Widget>[
+                                    AnimatedBuilder(
+                                      animation: _positionController,
+                                      builder: (context, child) => Positioned(
+                                        left: _positionAnimation.value,
+                                        child: AnimatedBuilder(
+                                          animation: _scale2Controller,
+                                          builder: (context, child) =>
+                                              Transform.scale(
+                                            scale: _scale2Animation.value,
+                                            child: Container(
+                                              width: 60,
+                                              height: 60,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.blue),
+                                              child: hideIcon == false
+                                                  ? Icon(
+                                                      Icons.arrow_forward,
+                                                      color: Colors.white,
+                                                    )
+                                                  : Container(),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ]),
-                                  ),
+                                    ),
+                                  ]),
                                 ),
                               ),
-                            )),
-                      )),
+                            ),
+                          )),
+                    ),
+                  ),
                   SizedBox(
                     height: 60,
                   ),
