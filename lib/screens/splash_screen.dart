@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mood_frontend/screens/login_screen.dart';
+import 'package:mood_frontend/widgets/caption_text.dart';
 import 'package:mood_frontend/widgets/splash_screen_gradient.dart';
 import 'package:page_transition/page_transition.dart';
 import '../animations/fade_animations.dart';
@@ -65,25 +67,20 @@ class _SplashScreenState extends State<SplashScreen>
     _scale2Controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
 
-    _scale2Animation =
-        Tween<double>(begin: 1.0, end: 32.0).animate(_scale2Controller)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              Navigator.push(
-                  context,
-                  PageTransition(
-                      type: PageTransitionType.fade,
-                      child: Center(
-                        child: Text('checking'),
-                      )));
-            }
-          });
+    _scale2Animation = Tween<double>(begin: 1.0, end: 32.0).animate(
+        _scale2Controller)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          Navigator.push(
+            context,
+            PageTransition(type: PageTransitionType.fade, child: LoginScreen()),
+          );
+        }
+      });
   }
 
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       // backgroundColor: Color.fromRGBO(3, 9, 23, 1),
       backgroundColor: Colors.red,
@@ -118,15 +115,11 @@ class _SplashScreenState extends State<SplashScreen>
                   SizedBox(
                     height: 15,
                   ),
-                  FadeAnimation(
-                      1.3,
-                      Text(
-                        "You all call it music; we call it therapy.",
-                        style: TextStyle(
-                            color: Colors.white.withOpacity(.7),
-                            height: 1.4,
-                            fontSize: 20),
-                      )),
+                  CaptionText(
+                    text: 'You all call it music; we call it therapy.',
+                    animationDelay: 1.3,
+                    textSize: 20.0,
+                  ),
                   SizedBox(
                     height: 120,
                   ),
