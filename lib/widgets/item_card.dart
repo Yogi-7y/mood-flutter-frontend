@@ -61,8 +61,7 @@ class _ItemCardState extends State<ItemCard>
 
   play() async {
     print('started');
-    int result = await audioPlayer.play(
-        "https://cdns-preview-a.dzcdn.net/stream/c-a91b6819c1de627ea291bbc69b77019c-4.mp3");
+    int result = await audioPlayer.play(widget.preview);
     if (result == 1) {
       print('played');
     } else {
