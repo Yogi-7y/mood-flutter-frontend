@@ -1,3 +1,4 @@
+import 'package:mood_frontend/screens/chat_screen.dart';
 import 'package:mood_frontend/screens/registration_screen.dart';
 import 'package:mood_frontend/widgets/button_form.dart';
 import 'package:mood_frontend/widgets/form_caption_link.dart';
@@ -6,9 +7,18 @@ import 'package:mood_frontend/widgets/hero_text.dart';
 import 'package:mood_frontend/widgets/input_field_form.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   static String id = 'login_screen';
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _auth = FirebaseAuth.instance;
+  String email, password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,11 +51,17 @@ class LoginScreen extends StatelessWidget {
                     border: Border(
                       bottom: BorderSide(color: Colors.grey[300]),
                     ),
+                    onTextChange: (value) {
+                      email = value;
+                    },
                   ),
                   InputFieldForm(
                     isObscure: true,
                     inputType: TextInputType.text,
                     hint: 'Password',
+                    onTextChange: (value) {
+                      password = value;
+                    },
                   ),
                 ],
               ),
@@ -57,6 +73,17 @@ class LoginScreen extends StatelessWidget {
               animationDelay: 1.8,
               buttonText: 'Login',
               buttonWidth: 120.0,
+              onButtonClick: () async {
+                try {
+                  final user = await _auth.signInWithEmailAndPassword(
+                      email: email, password: password);
+                  if (user != null) {
+                    Navigator.pushNamed(context, ChatScreen.id);
+                  }
+                } catch (e) {
+                  print(e);
+                }
+              },
             ),
             SizedBox(
               height: 20.0,
