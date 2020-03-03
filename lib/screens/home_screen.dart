@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:mood_frontend/constants/constants.dart';
-import 'package:mood_frontend/screens/chat_screen.dart';
 import 'package:mood_frontend/screens/movies_screen.dart';
+import 'package:mood_frontend/widgets/custom_floating_action_button.dart';
+import 'package:mood_frontend/widgets/hero_text.dart';
+import 'package:mood_frontend/widgets/popular_music.dart';
 import 'package:mood_frontend/widgets/search_text_field.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -43,33 +44,26 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
-          child: Column(
+          child: ListView(
             children: <Widget>[
               SearchTextField(),
+              SizedBox(
+                height: 10.0,
+              ),
+              HeroText(
+                animationDelay: 1.2,
+                heroText: ['Popular Songs'],
+                heroTextSize: 26.0,
+              ),
+              SizedBox(
+                height: 6.0,
+              ),
+              PopularMusicList(),
             ],
           ),
         ),
       ),
-      floatingActionButton: SpeedDial(
-        children: [
-          SpeedDialChild(
-            child: Icon(Icons.camera_front),
-            label: 'Image Picker',
-            onTap: () {},
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.chat_bubble),
-            label: 'Chat',
-            onTap: () {
-              Navigator.pushNamed(context, ChatScreen.id);
-            },
-          )
-        ],
-        animatedIcon: AnimatedIcons.menu_close,
-        overlayColor: Color(0xFF0d0d0d),
-        overlayOpacity: 0.2,
-        curve: Curves.bounceIn,
-      ),
+      floatingActionButton: CustomFloatingActionButton(),
     );
   }
 }
