@@ -1,3 +1,4 @@
+import 'package:mood_frontend/screens/chat_screen.dart';
 import 'package:mood_frontend/screens/login_screen.dart';
 import 'package:mood_frontend/widgets/button_form.dart';
 import 'package:mood_frontend/widgets/form_caption_link.dart';
@@ -6,12 +7,24 @@ import 'package:mood_frontend/widgets/hero_text.dart';
 import 'package:mood_frontend/widgets/input_field_form.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class RegistrationScreen extends StatelessWidget {
+class RegistrationScreen extends StatefulWidget {
   static String id = 'registration_screen';
+
+  @override
+  _RegistrationScreenState createState() => _RegistrationScreenState();
+}
+
+class _RegistrationScreenState extends State<RegistrationScreen> {
+  final _auth = FirebaseAuth.instance;
+
+  String username, email, password, confirmPassword;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Color.fromRGBO(3, 9, 23, 1),
       body: Container(
         padding: EdgeInsets.all(30),
@@ -34,25 +47,45 @@ class RegistrationScreen extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   InputFieldForm(
+                    inputType: TextInputType.text,
+                    isObscure: false,
                     hint: 'Username',
                     border: Border(
                       bottom: BorderSide(color: Colors.grey[300]),
                     ),
+                    onTextChange: (value) {
+                      username = value;
+                    },
                   ),
                   InputFieldForm(
+                    inputType: TextInputType.emailAddress,
+                    isObscure: false,
                     hint: 'Email or Phone number',
                     border: Border(
                       bottom: BorderSide(color: Colors.grey[300]),
                     ),
+                    onTextChange: (value) {
+                      email = value;
+                    },
                   ),
                   InputFieldForm(
+                    inputType: TextInputType.text,
+                    isObscure: true,
                     hint: 'Password',
                     border: Border(
                       bottom: BorderSide(color: Colors.grey[300]),
                     ),
+                    onTextChange: (value) {
+                      password = value;
+                    },
                   ),
                   InputFieldForm(
+                    inputType: TextInputType.text,
+                    isObscure: true,
                     hint: 'Confirm Password',
+                    onTextChange: (value) {
+                      confirmPassword = value;
+                    },
                   ),
                 ],
               ),
@@ -64,6 +97,22 @@ class RegistrationScreen extends StatelessWidget {
               animationDelay: 1.8,
               buttonText: 'Sign up',
               buttonWidth: 120.0,
+              onButtonClick: () async {
+                try {
+                  final newUser = await _auth.createUserWithEmailAndPassword(
+                      email: email, password: password);
+
+                  if (newUser != null) {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                          child: ChatScreen(), type: PageTransitionType.fade),
+                    );
+                  }
+                } catch (e) {
+                  print(e);
+                }
+              },
             ),
             SizedBox(
               height: 20.0,

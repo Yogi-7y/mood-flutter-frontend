@@ -12,6 +12,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: true,
       backgroundColor: Color.fromRGBO(3, 9, 23, 1),
       body: Container(
         padding: EdgeInsets.all(30),
@@ -34,12 +35,16 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   InputFieldForm(
+                    inputType: TextInputType.emailAddress,
+                    isObscure: false,
                     hint: 'Email or Phone number',
                     border: Border(
                       bottom: BorderSide(color: Colors.grey[300]),
                     ),
                   ),
                   InputFieldForm(
+                    isObscure: true,
+                    inputType: TextInputType.text,
                     hint: 'Password',
                   ),
                 ],
