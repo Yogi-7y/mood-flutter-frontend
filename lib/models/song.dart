@@ -4,6 +4,13 @@ class Song {
   final artist;
   final image;
   final preview;
+  final duration;
 
-  Song({this.artist, this.id, this.image, this.preview, this.title});
+  Song(
+      {this.artist,
+      this.duration,
+      this.id,
+      this.image,
+      this.preview,
+      this.title});
 }

@@ -4,6 +4,12 @@ import 'package:mood_frontend/widgets/caption_text.dart';
 import 'package:mood_frontend/widgets/splash_screen_gradient.dart';
 import 'package:page_transition/page_transition.dart';
 import '../animations/fade_animations.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:convert';
+import '../providers/songs_provider.dart';
+import '../models/song.dart';
 
 class SplashScreen extends StatefulWidget {
   static String id = 'splash_screen';
@@ -25,9 +31,38 @@ class _SplashScreenState extends State<SplashScreen>
 
   bool hideIcon = false;
 
+  getData() async {
+    const POPULAR_MUSIC_BASE_URL = 'https://api.deezer.com/playlist/';
+    const TOP_POP_NUMBER = '1140232701';
+    http.Response response =
+        await http.get('$POPULAR_MUSIC_BASE_URL$TOP_POP_NUMBER');
+    var tracks = jsonDecode(response.body)['tracks']['data'];
+    for (int i = 0; i < tracks.length; i++) {
+      Provider.of<SongProvider>(context, listen: false).addSong(
+        Song(
+            artist: tracks[i]['artist']['name'],
+            title: tracks[i]['title'],
+            image: tracks[i]['album']['cover_xl'],
+            preview: tracks[i]['preview'],
+            duration: tracks[i]['duration']),
+      );
+    }
+    Fluttertoast.showToast(
+        msg: 'Data successfully loaded',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIos: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
+
+    print('toast loaded');
+  }
+
   @override
   void initState() {
     super.initState();
+    getData();
 
     _scaleController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));

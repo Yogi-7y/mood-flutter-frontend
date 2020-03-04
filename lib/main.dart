@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'screens/splash_screen.dart';
 
 void main() => runApp(
-        ChangeNotifierProvider(
+      ChangeNotifierProvider(
         create: (_) => SongProvider(),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
