@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:mood_frontend/screens/chat_screen.dart';
+import '../screens/pick_image_screen.dart';
 
 class CustomFloatingActionButton extends StatelessWidget {
   @override
@@ -10,7 +11,9 @@ class CustomFloatingActionButton extends StatelessWidget {
         SpeedDialChild(
           child: Icon(Icons.camera_front),
           label: 'Image Picker',
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, ImagePickerScreen.id);
+          },
         ),
         SpeedDialChild(
           child: Icon(Icons.chat_bubble),
