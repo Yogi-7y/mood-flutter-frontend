@@ -5,8 +5,9 @@ class ItemCard extends StatefulWidget {
   final image;
   final String title;
   final preview;
+  final artist;
 
-  ItemCard({this.image, this.title, this.preview});
+  ItemCard({this.image, this.title, this.preview, this.artist});
 
   @override
   _ItemCardState createState() => _ItemCardState();
@@ -71,27 +72,50 @@ class _ItemCardState extends State<ItemCard>
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(25.0),
-      child: GestureDetector(
-        onTap: () {},
-        child: Container(
-          child: Center(
-              child: IconButton(
-            icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
-            iconSize: 50.0,
-            color: Colors.white,
-            onPressed: () => _handleOnPressed(),
-          )),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(widget.image), fit: BoxFit.cover),
+    return Column(
+      children: <Widget>[
+        ClipRRect(
+          borderRadius: BorderRadius.circular(25.0),
+          child: GestureDetector(
+            onTap: () {},
+            child: Container(
+              child: Center(
+                child: IconButton(
+                  icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
+                  iconSize: 50.0,
+                  color: Colors.white,
+                  onPressed: () => _handleOnPressed(),
+                ),
+              ),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(widget.image), fit: BoxFit.cover),
+              ),
+              margin: EdgeInsets.symmetric(horizontal: 10.0),
+              height: 150.0,
+              width: 120.0,
+            ),
           ),
-          margin: EdgeInsets.symmetric(horizontal: 10.0),
-          height: 50.0,
-          width: 120.0,
         ),
-      ),
+        Container(
+          width: 120.0,
+          child: Column(
+            children: <Widget>[
+              Text(
+                widget.title,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.white, fontSize: 16.0),
+                textAlign: TextAlign.start,
+              ),
+              Text(
+                widget.artist,
+                style: TextStyle(
+                    color: Colors.white.withOpacity(.7), fontSize: 12.0),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

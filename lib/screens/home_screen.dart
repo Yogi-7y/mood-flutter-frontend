@@ -3,6 +3,7 @@ import 'package:mood_frontend/constants/constants.dart';
 import 'package:mood_frontend/screens/movies_screen.dart';
 import 'package:mood_frontend/widgets/custom_floating_action_button.dart';
 import 'package:mood_frontend/widgets/hero_text.dart';
+import 'package:mood_frontend/widgets/mood_songs_list.dart';
 import 'package:mood_frontend/widgets/popular_music.dart';
 import 'package:mood_frontend/widgets/search_text_field.dart';
 
@@ -59,6 +60,10 @@ class HomeScreen extends StatelessWidget {
                 height: 6.0,
               ),
               PopularMusicList(),
+              SizedBox(
+                height: 4.0,
+              ),
+              MoodSongList(),
             ],
           ),
         ),

@@ -17,6 +17,7 @@ class HeroText extends StatelessWidget {
         alignment: AlignmentDirectional.topStart,
         text: heroText,
         textStyle: TextStyle(
+            letterSpacing: 1.2,
             color: Colors.white,
             fontSize: heroTextSize,
             fontWeight: FontWeight.bold),

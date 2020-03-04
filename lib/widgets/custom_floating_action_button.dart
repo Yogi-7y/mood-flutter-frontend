@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:mood_frontend/screens/chat_screen.dart';
+import 'package:provider/provider.dart';
+import '../providers/songs_provider.dart';
+import '../models/song.dart';
 
 class CustomFloatingActionButton extends StatelessWidget {
   @override
