@@ -4,15 +4,12 @@ import 'package:mood_frontend/widgets/caption_text.dart';
 import 'package:mood_frontend/widgets/splash_screen_gradient.dart';
 import 'package:page_transition/page_transition.dart';
 import '../animations/fade_animations.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'dart:convert';
 import '../providers/songs_provider.dart';
-import '../models/song.dart';
 
 class SplashScreen extends StatefulWidget {
   static String id = 'splash_screen';
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -31,38 +28,39 @@ class _SplashScreenState extends State<SplashScreen>
 
   bool hideIcon = false;
 
-  getData() async {
-    const POPULAR_MUSIC_BASE_URL = 'https://api.deezer.com/playlist/';
-    const TOP_POP_NUMBER = '1140232701';
-    http.Response response =
-        await http.get('$POPULAR_MUSIC_BASE_URL$TOP_POP_NUMBER');
-    var tracks = jsonDecode(response.body)['tracks']['data'];
-    for (int i = 0; i < tracks.length; i++) {
-      Provider.of<SongProvider>(context, listen: false).addSong(
-        Song(
-            artist: tracks[i]['artist']['name'],
-            title: tracks[i]['title'],
-            image: tracks[i]['album']['cover_xl'],
-            preview: tracks[i]['preview'],
-            duration: tracks[i]['duration']),
-      );
-    }
-    Fluttertoast.showToast(
-        msg: 'Data successfully loaded',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIos: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0);
-
-    print('toast loaded');
-  }
+//  getData() async {
+//    bool isSad = Provider.of<SongProvider>(context, listen: false).isSad;
+//    String url = isSad
+//        ? '$POPULAR_MUSIC_BASE_URL$SAD_SONGS_PLAYLIST'
+//        : '$POPULAR_MUSIC_BASE_URL$POPULAR_SONGS_PLAYLIST';
+//    http.Response response = await http.get(url);
+//    var tracks = jsonDecode(response.body)['tracks']['data'];
+//    for (int i = 0; i < tracks.length; i++) {
+//      Provider.of<SongProvider>(context, listen: false).addSong(
+//        Song(
+//            artist: tracks[i]['artist']['name'],
+//            title: tracks[i]['title'],
+//            image: tracks[i]['album']['cover_xl'],
+//            preview: tracks[i]['preview'],
+//            duration: tracks[i]['duration']),
+//      );
+//    }
+//    Fluttertoast.showToast(
+//        msg: 'Data successfully loaded',
+//        toastLength: Toast.LENGTH_SHORT,
+//        gravity: ToastGravity.CENTER,
+//        timeInSecForIos: 1,
+//        backgroundColor: Colors.red,
+//        textColor: Colors.white,
+//        fontSize: 16.0);
+//
+//    print('toast loaded');
+//  }
 
   @override
   void initState() {
     super.initState();
-    getData();
+//    getData();
 
     _scaleController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
@@ -175,38 +173,48 @@ class _SplashScreenState extends State<SplashScreen>
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(50),
                                     color: Colors.blue.withOpacity(.4)),
-                                child: InkWell(
-                                  onTap: () {
-                                    _scaleController.forward();
-                                  },
-                                  child: Stack(children: <Widget>[
-                                    AnimatedBuilder(
-                                      animation: _positionController,
-                                      builder: (context, child) => Positioned(
-                                        left: _positionAnimation.value,
-                                        child: AnimatedBuilder(
-                                          animation: _scale2Controller,
-                                          builder: (context, child) =>
-                                              Transform.scale(
-                                            scale: _scale2Animation.value,
-                                            child: Container(
-                                              width: 60,
-                                              height: 60,
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.blue),
-                                              child: hideIcon == false
-                                                  ? Icon(
-                                                      Icons.arrow_forward,
-                                                      color: Colors.white,
-                                                    )
-                                                  : Container(),
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: InkWell(
+                                    onTap: () {
+                                      Provider.of<SongProvider>(context,
+                                              listen: false)
+                                          .getData();
+                                      Provider.of<SongProvider>(context,
+                                              listen: false)
+                                          .getSadPlayList();
+
+                                      _scaleController.forward();
+                                    },
+                                    child: Stack(children: <Widget>[
+                                      AnimatedBuilder(
+                                        animation: _positionController,
+                                        builder: (context, child) => Positioned(
+                                          left: _positionAnimation.value,
+                                          child: AnimatedBuilder(
+                                            animation: _scale2Controller,
+                                            builder: (context, child) =>
+                                                Transform.scale(
+                                              scale: _scale2Animation.value,
+                                              child: Container(
+                                                width: 60,
+                                                height: 60,
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Colors.blue),
+                                                child: hideIcon == false
+                                                    ? Icon(
+                                                        Icons.arrow_forward,
+                                                        color: Colors.white,
+                                                      )
+                                                    : Container(),
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ]),
+                                    ]),
+                                  ),
                                 ),
                               ),
                             ),

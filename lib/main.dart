@@ -11,10 +11,10 @@ import 'screens/splash_screen.dart';
 
 void main() => runApp(
       ChangeNotifierProvider(
-        create: (_) => SongProvider(),
+        create: (context) => SongProvider(),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: HomeScreen.id,
+          initialRoute: SplashScreen.id,
           routes: {
             SplashScreen.id: (context) => SplashScreen(),
             LoginScreen.id: (context) => LoginScreen(),

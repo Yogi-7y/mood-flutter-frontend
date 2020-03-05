@@ -19,6 +19,7 @@ class CustomFloatingActionButton extends StatelessWidget {
           child: Icon(Icons.chat_bubble),
           label: 'Chat',
           onTap: () {
+            print('tapped');
             Navigator.pushNamed(context, ChatScreen.id);
           },
         )

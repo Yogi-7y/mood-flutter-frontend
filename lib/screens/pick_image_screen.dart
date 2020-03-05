@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mood_frontend/constants/constants.dart';
+import '../providers/songs_provider.dart';
+import 'package:mood_frontend/screens/home_screen.dart';
+import 'package:provider/provider.dart';
 
 class ImagePickerScreen extends StatefulWidget {
   static String id = 'image_picker_screen';
@@ -62,7 +65,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
           IconButton(
             icon: Icon(Icons.check),
             onPressed: () {
-              print('hey');
+              Navigator.pushNamed(context, HomeScreen.id);
             },
           )
         ],
@@ -78,16 +81,30 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                     color: Colors.white,
                   ),
                 )
-              : Center(
-                  child: FittedBox(
-                    child: SizedBox(
-                      width: _image.width.toDouble(),
-                      height: _image.height.toDouble(),
-                      child: CustomPaint(
-                        painter: FacePainter(_image, _faces),
+              : Column(
+                  children: <Widget>[
+                    Center(
+                      child: FittedBox(
+                        child: SizedBox(
+                          width: _image.width.toDouble(),
+                          height: _image.height.toDouble(),
+                          child: CustomPaint(
+                            painter: FacePainter(_image, _faces),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    RaisedButton(
+                      onPressed: () {
+                        Provider.of<SongProvider>(context, listen: false)
+                            .toggleIsSad();
+                        print(
+                            'image screen button clicked: ${Provider.of<SongProvider>(context, listen: false).isSad}');
+                        Navigator.pushNamed(context, HomeScreen.id);
+                      },
+                      child: Text('hey'),
+                    )
+                  ],
                 ),
       floatingActionButton: FloatingActionButton(
         onPressed: _getImageAndDetectFaces,
@@ -124,9 +141,9 @@ class FacePainter extends CustomPainter {
       String rightEyeOpenProbability =
           faces[i].rightEyeOpenProbability.toStringAsFixed(2);
       canvas.drawRect(rects[i], paint);
-      print('Smile Probability: $smileProbability');
-      print('left eye:  $leftEyeOpenProbability');
-      print('right eye:  $rightEyeOpenProbability');
+      // print('Smile Probability: $smileProbability');
+      // print('left eye:  $leftEyeOpenProbability');
+      // print('right eye:  $rightEyeOpenProbability');
       TextSpan span = new TextSpan(
           style: new TextStyle(color: Colors.deepPurple, fontSize: 24.0),
           text:

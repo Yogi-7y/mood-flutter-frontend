@@ -6,9 +6,10 @@ import '../models/song.dart';
 import 'package:provider/provider.dart';
 
 class MoodSongList extends StatelessWidget {
-  _buildRestaurants(BuildContext context) {
+  _buildRestaurants(BuildContext context, SongProvider songData) {
     List<Widget> musicList = [];
-    Provider.of<SongProvider>(context).songs.forEach(
+    var playlist = songData.isSad ? songData.sadPlayList : songData.songs;
+    playlist.forEach(
       (Song song) {
         musicList.add(SongItem(song.title, song.artist, song.image,
             song.duration.toString(), song.preview));
@@ -26,13 +27,17 @@ class MoodSongList extends StatelessWidget {
         children: <Widget>[
           HeroText(
             animationDelay: 1.2,
-            heroText: ['Mood: Sad'],
+            heroText: ['Mood: ${Provider.of<SongProvider>(context).isSad}'],
             heroTextSize: 26.0,
           ),
           SizedBox(
             height: 4.0,
           ),
-          _buildRestaurants(context),
+          Consumer<SongProvider>(
+            builder: (context, songData, child) {
+              return _buildRestaurants(context, songData);
+            },
+          )
         ],
       ),
     );

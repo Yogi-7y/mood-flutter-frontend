@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mood_frontend/models/song.dart';
 import 'package:mood_frontend/widgets/item_card.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+
 import '../providers/songs_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -12,34 +11,39 @@ class PopularMusicList extends StatefulWidget {
 }
 
 class _PopularMusicListState extends State<PopularMusicList> {
-  static const POPULAR_MUSIC_BASE_URL = 'https://api.deezer.com/playlist/';
-  static const TOP_POP_NUMBER = '1140232701';
+//  @override
+//  void initState() {
+//    super.initState();
+//    print('init called');
+////    getData();
+//    print('init done');
+//  }
+//
+//  getData() async {
+//    bool isSad = Provider.of<SongProvider>(context, listen: false).isSad;
+//    String url = isSad
+//        ? '$POPULAR_MUSIC_BASE_URL$SAD_SONGS_PLAYLIST'
+//        : '$POPULAR_MUSIC_BASE_URL$POPULAR_SONGS_PLAYLIST';
+//    http.Response response = await http.get(url);
+//    var tracks = jsonDecode(response.body)['tracks']['data'];
+//    for (int i = 0; i < tracks.length; i++) {
+//      Provider.of<SongProvider>(context, listen: false).addSong(
+//        Song(
+//          artist: tracks[i]['artist']['name'],
+//          title: tracks[i]['title'],
+//          image: tracks[i]['album']['cover_xl'],
+//          preview: tracks[i]['preview'],
+//          duration: tracks[i]['duration'],
+//        ),
+//      );
+//    }
+//  }
 
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
-
-  getData() async {
-    const POPULAR_MUSIC_BASE_URL = 'https://api.deezer.com/playlist/';
-    const TOP_POP_NUMBER = '1140232701';
-    const SAD_PLAYLIST = '1911334042';
-    http.Response response =
-        await http.get('$POPULAR_MUSIC_BASE_URL$SAD_PLAYLIST');
-    var tracks = jsonDecode(response.body)['tracks']['data'];
-    for (int i = 0; i < tracks.length; i++) {
-      Provider.of<SongProvider>(context, listen: false).addSong(
-        Song(
-          artist: tracks[i]['artist']['name'],
-          title: tracks[i]['title'],
-          image: tracks[i]['album']['cover_xl'],
-          preview: tracks[i]['preview'],
-          duration: tracks[i]['duration'],
-        ),
-      );
-    }
-  }
+//  @override
+//  void initState() {
+//    super.initState();
+//    getData();
+//  }
 
   @override
   Widget build(BuildContext context) {
