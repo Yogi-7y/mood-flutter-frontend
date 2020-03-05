@@ -179,10 +179,16 @@ class _SplashScreenState extends State<SplashScreen>
                                     onTap: () {
                                       Provider.of<SongProvider>(context,
                                               listen: false)
-                                          .getData();
+                                          .fillTopSongsPlaylist();
                                       Provider.of<SongProvider>(context,
                                               listen: false)
-                                          .getSadPlayList();
+                                          .fillHappySongsPlaylist();
+                                      Provider.of<SongProvider>(context,
+                                              listen: false)
+                                          .fillSadSongsPlaylist();
+                                      Provider.of<SongProvider>(context,
+                                              listen: false)
+                                          .fillSleepySongsPlaylist();
 
                                       _scaleController.forward();
                                     },

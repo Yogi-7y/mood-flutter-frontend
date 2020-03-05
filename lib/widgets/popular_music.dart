@@ -52,9 +52,10 @@ class _PopularMusicListState extends State<PopularMusicList> {
       width: 200.0,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: Provider.of<SongProvider>(context).songs.length,
+        itemCount: Provider.of<SongProvider>(context).topSongsPlaylist.length,
         itemBuilder: (BuildContext context, int index) {
-          Song song = Provider.of<SongProvider>(context).songs[index];
+          Song song =
+              Provider.of<SongProvider>(context).topSongsPlaylist[index];
           return ItemCard(
             image: song.image,
             title: song.title,

@@ -4,11 +4,30 @@ import '../providers/songs_provider.dart';
 import './hero_text.dart';
 import '../models/song.dart';
 import 'package:provider/provider.dart';
+import '../constants/moods.dart';
 
 class MoodSongList extends StatelessWidget {
   _buildRestaurants(BuildContext context, SongProvider songData) {
     List<Widget> musicList = [];
-    var playlist = songData.isSad ? songData.sadPlayList : songData.songs;
+    var playlist;
+    // var playlist = songData.isSad
+    //     ? songData.sadSongsPlayList
+    //     : songData.happySongsPlayList;
+
+    switch (songData.mood) {
+      case Mood.Happy:
+        playlist = songData.happySongsPlayList;
+        break;
+      case Mood.Sad:
+        playlist = songData.sadSongsPlayList;
+        break;
+      case Mood.Sleepy:
+        playlist = songData.sleepySongsPlayList;
+        break;
+      default:
+        playlist = songData.happySongsPlayList;
+        break;
+    }
     playlist.forEach(
       (Song song) {
         musicList.add(SongItem(song.title, song.artist, song.image,
@@ -20,14 +39,15 @@ class MoodSongList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('${Provider.of<SongProvider>(context).songs.length} songs here');
+    print(
+        '${Provider.of<SongProvider>(context).happySongsPlayList.length} songs here');
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           HeroText(
             animationDelay: 1.2,
-            heroText: ['Mood: ${Provider.of<SongProvider>(context).isSad}'],
+            heroText: ['Recommendations'],
             heroTextSize: 26.0,
           ),
           SizedBox(
@@ -35,6 +55,9 @@ class MoodSongList extends StatelessWidget {
           ),
           Consumer<SongProvider>(
             builder: (context, songData, child) {
+              print('smile: ${songData.smileProbability}');
+              print('left eye: ${songData.leftEyeOpenProbability}');
+              print('right eye: ${songData.rightEyeProbability}');
               return _buildRestaurants(context, songData);
             },
           )

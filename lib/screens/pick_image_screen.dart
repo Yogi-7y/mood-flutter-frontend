@@ -7,6 +7,7 @@ import 'package:mood_frontend/constants/constants.dart';
 import '../providers/songs_provider.dart';
 import 'package:mood_frontend/screens/home_screen.dart';
 import 'package:provider/provider.dart';
+import '../constants/moods.dart';
 
 class ImagePickerScreen extends StatefulWidget {
   static String id = 'image_picker_screen';
@@ -23,9 +24,11 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
 
   _getImageAndDetectFaces() async {
     final imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      isLoading = true;
-    });
+    setState(
+      () {
+        isLoading = true;
+      },
+    );
     final image = FirebaseVisionImage.fromFile(imageFile);
     final faceDetector = FirebaseVision.instance.faceDetector(
       FaceDetectorOptions(
@@ -35,21 +38,25 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
     );
     List<Face> faces = await faceDetector.processImage(image);
     if (mounted) {
-      setState(() {
-        _imageFile = imageFile;
-        _faces = faces;
-        _loadImage(imageFile);
-      });
+      setState(
+        () {
+          _imageFile = imageFile;
+          _faces = faces;
+          _loadImage(imageFile);
+        },
+      );
     }
   }
 
   _loadImage(File file) async {
     final data = await file.readAsBytes();
     await decodeImageFromList(data).then(
-      (value) => setState(() {
-        _image = value;
-        isLoading = false;
-      }),
+      (value) => setState(
+        () {
+          _image = value;
+          isLoading = false;
+        },
+      ),
     );
   }
 
@@ -57,6 +64,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(Provider.of<SongProvider>(context).mood.toString()),
         leading: null,
         automaticallyImplyLeading: false,
         backgroundColor: KBlueColor,
@@ -89,20 +97,44 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                           width: _image.width.toDouble(),
                           height: _image.height.toDouble(),
                           child: CustomPaint(
-                            painter: FacePainter(_image, _faces),
+                            painter: FacePainter(_image, _faces, context),
                           ),
                         ),
                       ),
                     ),
-                    RaisedButton(
-                      onPressed: () {
-                        Provider.of<SongProvider>(context, listen: false)
-                            .toggleIsSad();
-                        print(
-                            'image screen button clicked: ${Provider.of<SongProvider>(context, listen: false).isSad}');
-                        Navigator.pushNamed(context, HomeScreen.id);
+                    Consumer<SongProvider>(
+                      builder: (context, songData, child) {
+                        return RaisedButton(
+                          onPressed: () {
+                            double smileProbability =
+                                double.parse(songData.smileProbability);
+                            double leftEyeOpen =
+                                double.parse(songData.leftEyeOpenProbability);
+                            double rightEyeOpen =
+                                double.parse(songData.rightEyeProbability);
+
+                            if (smileProbability > 0.5 &&
+                                leftEyeOpen > 0.3 &&
+                                rightEyeOpen > 0.3) {
+                              songData.makeHappyPredictions();
+                              songData.changeMood(Mood.Happy);
+                            } else {
+                              songData.makeSadPredictions();
+                              songData.changeMood(Mood.Sad);
+                            }
+
+                            if (leftEyeOpen < 0.4 &&
+                                rightEyeOpen < 0.4 &&
+                                smileProbability < 0.4) {
+                              songData.makeSleepyPredictions();
+                              songData.changeMood(Mood.Sleepy);
+                            }
+
+                            Navigator.pushNamed(context, HomeScreen.id);
+                          },
+                          child: Text('hey'),
+                        );
                       },
-                      child: Text('hey'),
                     )
                   ],
                 ),
@@ -119,8 +151,10 @@ class FacePainter extends CustomPainter {
   final ui.Image image;
   final List<Face> faces;
   final List<Rect> rects = [];
+  BuildContext context;
 
-  FacePainter(this.image, this.faces) {
+  FacePainter(this.image, this.faces, BuildContext ctx) {
+    context = ctx;
     for (var i = 0; i < faces.length; i++) {
       rects.add(faces[i].boundingBox);
     }
@@ -140,6 +174,12 @@ class FacePainter extends CustomPainter {
           faces[i].leftEyeOpenProbability.toStringAsFixed(2);
       String rightEyeOpenProbability =
           faces[i].rightEyeOpenProbability.toStringAsFixed(2);
+      Provider.of<SongProvider>(context, listen: false)
+          .changeSmileProbability(smileProbability);
+      Provider.of<SongProvider>(context, listen: false)
+          .changeLeftEyeProbability(leftEyeOpenProbability);
+      Provider.of<SongProvider>(context, listen: false)
+          .changeRightEyeProbability(rightEyeOpenProbability);
       canvas.drawRect(rects[i], paint);
       // print('Smile Probability: $smileProbability');
       // print('left eye:  $leftEyeOpenProbability');

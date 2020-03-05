@@ -1,21 +1,60 @@
 import 'package:flutter/foundation.dart';
+import 'package:mood_frontend/constants/moods.dart';
 import '../models/song.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../constants/playlists_id.dart';
 
 class SongProvider extends ChangeNotifier {
-  List<Song> songs = [];
-  List<Song> sadPlayList = [];
+  List<Song> topSongsPlaylist = [];
+  List<Song> sadSongsPlayList = [];
+  List<Song> happySongsPlayList = [];
+  List<Song> sleepySongsPlayList = [];
   bool isSad = false;
+  bool isSpleepy = false;
 
-//  SongProvider() {
-//    print('change notifier called');
-//    getData();
-//  }
+  String smileProbability = '0';
+  String leftEyeOpenProbability = '0';
+  String rightEyeProbability = '0';
+  var mood = Mood.Happy;
+
+  void changeMood(var m) {
+    mood = m;
+    notifyListeners();
+  }
+
+  void changeSmileProbability(String probability) {
+    smileProbability = probability;
+    notifyListeners();
+  }
+
+  void changeLeftEyeProbability(String probability) {
+    leftEyeOpenProbability = probability;
+    notifyListeners();
+  }
+
+  void changeRightEyeProbability(String probability) {
+    rightEyeProbability = probability;
+    notifyListeners();
+  }
+
+  void makeHappyPredictions() {
+    isSad = false;
+    notifyListeners();
+  }
+
+  void makeSadPredictions() {
+    isSad = true;
+    notifyListeners();
+  }
+
+  void makeSleepyPredictions() {
+    isSpleepy = true;
+    notifyListeners();
+  }
 
   void addSong(Song song) {
-    songs.add(song);
+    topSongsPlaylist.add(song);
     notifyListeners();
   }
 
@@ -24,15 +63,18 @@ class SongProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  getData() async {
-    print('getData() called.');
-    String url = isSad
-        ? '$POPULAR_MUSIC_BASE_URL$SAD_SONGS_PLAYLIST'
-        : '$POPULAR_MUSIC_BASE_URL$POPULAR_SONGS_PLAYLIST';
+  void toggleIsSleepy() {
+    isSpleepy = !isSpleepy;
+    notifyListeners();
+  }
+
+  fillTopSongsPlaylist() async {
+    print('top songs playlist');
+    String url = '$POPULAR_MUSIC_BASE_URL$TOP_SONGS_PLAYLIST';
     http.Response response = await http.get(url);
     var tracks = jsonDecode(response.body)['tracks']['data'];
     for (int i = 0; i < tracks.length; i++) {
-      songs.add(
+      topSongsPlaylist.add(
         Song(
             artist: tracks[i]['artist']['name'],
             title: tracks[i]['title'],
@@ -43,13 +85,47 @@ class SongProvider extends ChangeNotifier {
     }
   }
 
-  getSadPlayList() async {
-    print('getData() called.');
+  fillSadSongsPlaylist() async {
+    print('sad songs playlist');
     String url = '$POPULAR_MUSIC_BASE_URL$SAD_SONGS_PLAYLIST';
     http.Response response = await http.get(url);
     var tracks = jsonDecode(response.body)['tracks']['data'];
     for (int i = 0; i < tracks.length; i++) {
-      sadPlayList.add(
+      sadSongsPlayList.add(
+        Song(
+            artist: tracks[i]['artist']['name'],
+            title: tracks[i]['title'],
+            image: tracks[i]['album']['cover_xl'],
+            preview: tracks[i]['preview'],
+            duration: tracks[i]['duration']),
+      );
+    }
+  }
+
+  fillHappySongsPlaylist() async {
+    print('sad songs playlist');
+    String url = '$POPULAR_MUSIC_BASE_URL$HAPPY_SONGS_PLAYLIST';
+    http.Response response = await http.get(url);
+    var tracks = jsonDecode(response.body)['tracks']['data'];
+    for (int i = 0; i < tracks.length; i++) {
+      happySongsPlayList.add(
+        Song(
+            artist: tracks[i]['artist']['name'],
+            title: tracks[i]['title'],
+            image: tracks[i]['album']['cover_xl'],
+            preview: tracks[i]['preview'],
+            duration: tracks[i]['duration']),
+      );
+    }
+  }
+
+  fillSleepySongsPlaylist() async {
+    print('sad songs playlist');
+    String url = '$POPULAR_MUSIC_BASE_URL$SLEEPY_SONGS_PLAYLIST';
+    http.Response response = await http.get(url);
+    var tracks = jsonDecode(response.body)['tracks']['data'];
+    for (int i = 0; i < tracks.length; i++) {
+      sleepySongsPlayList.add(
         Song(
             artist: tracks[i]['artist']['name'],
             title: tracks[i]['title'],
