@@ -17,9 +17,29 @@ class SongProvider extends ChangeNotifier {
   String leftEyeOpenProbability = '0';
   String rightEyeProbability = '0';
   var mood = Mood.Happy;
+  String emoji = '';
+
+  void predictEmoji() {
+    switch (mood) {
+      case Mood.Happy:
+        emoji = '😊';
+        break;
+      case Mood.Sad:
+        emoji = '😔';
+        break;
+      case Mood.Sleepy:
+        emoji = '😴';
+        break;
+      default:
+        emoji = '🤔';
+        break;
+    }
+    notifyListeners();
+  }
 
   void changeMood(var m) {
     mood = m;
+    predictEmoji();
     notifyListeners();
   }
 

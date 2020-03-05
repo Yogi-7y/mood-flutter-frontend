@@ -34,10 +34,12 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              HeroText(
-                animationDelay: 1.2,
-                heroText: ["Login"],
-                heroTextSize: 40.0,
+              Flexible(
+                child: HeroText(
+                  animationDelay: 1.2,
+                  heroText: ["Login"],
+                  heroTextSize: 40.0,
+                ),
               ),
               SizedBox(
                 height: 30,
