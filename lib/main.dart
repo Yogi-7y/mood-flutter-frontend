@@ -14,7 +14,7 @@ void main() => runApp(
         create: (context) => SongProvider(),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: SplashScreen.id,
+          initialRoute: ChatScreen.id,
           routes: {
             SplashScreen.id: (context) => SplashScreen(),
             LoginScreen.id: (context) => LoginScreen(),

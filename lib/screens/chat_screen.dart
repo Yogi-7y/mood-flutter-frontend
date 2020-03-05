@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mood_frontend/models/chatbot_reply.dart';
 import '../constants/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../widgets/chat_message_bubble.dart';
+import '../services/chatbot.dart';
 
 final _firestore = Firestore.instance;
 const collectionName = 'messages';
@@ -97,7 +99,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       size: 30.0,
                       color: Colors.white,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       messageTextController.clear();
                       print(
                           'logged user email: ${loggedInUser.email} \n $messageText');
@@ -106,6 +108,19 @@ class _ChatScreenState extends State<ChatScreen> {
                         'sender': loggedInUser.email,
                         // 'date': DateTime.now().toIso8601String().toString()
                         'date': FieldValue.serverTimestamp()
+                      });
+                      ChatbotReply chatbotReply = await chatbotPostMethod(
+                          'https://moodrestapi.herokuapp.com/rest-apis/rest-get/',
+                          {'message': '$messageText'});
+
+                      _firestore.collection(collectionName).add({
+                        'text': chatbotReply.reply,
+                        'sender': 'bot',
+                        'date': FieldValue.serverTimestamp()
+                      });
+
+                      chatbotReply.tones.forEach((var t) {
+                        print(t);
                       });
                     },
                     // child: Text(
