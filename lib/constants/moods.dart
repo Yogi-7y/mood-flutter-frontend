@@ -1,1 +1,10 @@
-enum Mood { Happy, Sleepy, Sad }
+enum Mood {
+  Happy,
+  Sleepy,
+  Sad,
+  Anger,
+  Fear,
+  Analytical,
+  Confident,
+  Tentative,
+}

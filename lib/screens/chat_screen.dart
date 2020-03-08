@@ -9,6 +9,7 @@ import '../services/chatbot.dart';
 final _firestore = Firestore.instance;
 const collectionName = 'messages';
 FirebaseUser loggedInUser;
+ChatbotReply chatbotReply;
 
 class ChatScreen extends StatefulWidget {
   static String id = 'chat_screen';
@@ -57,7 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
         actions: <Widget>[
           IconButton(
               icon: Icon(
-                Icons.close,
+                Icons.music_note,
                 color: Colors.white,
               ),
               onPressed: () {
@@ -109,7 +110,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         // 'date': DateTime.now().toIso8601String().toString()
                         'date': FieldValue.serverTimestamp()
                       });
-                      ChatbotReply chatbotReply = await chatbotPostMethod(
+                      chatbotReply = await chatbotPostMethod(
                           'https://moodrestapi.herokuapp.com/rest-apis/rest-get/',
                           {'message': '$messageText'});
 
@@ -160,6 +161,7 @@ class MessageStream extends StatelessWidget {
           final currentUser = loggedInUser.email;
 
           final messageBubble = ChatMessageBubble(
+            // detectEmotion: chatbotReply.tones.toString(),
             sender: messageSender,
             text: messageText,
             isMe: currentUser == messageSender,
