@@ -28,6 +28,7 @@ class CustomFloatingActionButton extends StatelessWidget {
       overlayColor: Color(0xFF0d0d0d),
       overlayOpacity: 0.2,
       curve: Curves.bounceIn,
+      backgroundColor: Colors.red,
     );
   }
 }

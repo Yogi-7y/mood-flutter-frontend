@@ -13,11 +13,11 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: KBlueColor,
+        backgroundColor: KMoviesScreenColor,
         elevation: 0,
         title: Text('Music'),
       ),
-      backgroundColor: KBlueColor,
+      backgroundColor: KMoviesScreenColor,
       resizeToAvoidBottomPadding: false,
       drawer: Drawer(
         child: ListView(

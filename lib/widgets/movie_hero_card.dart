@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mood_frontend/widgets/genre_list.dart';
+import 'package:mood_frontend/widgets/genre.dart';
 import 'package:mood_frontend/widgets/star_display_widget.dart';
 
 class MoviesHeroCard extends StatelessWidget {
@@ -14,7 +14,7 @@ class MoviesHeroCard extends StatelessWidget {
             flex: 5,
             child: Container(
               width: width * 0.4,
-              height: height * 0.4,
+              height: height * 0.35,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(color: Colors.grey, blurRadius: 5.0),
@@ -106,6 +106,29 @@ class MoviesHeroCard extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        child: Image(
+                          width: 25.0,
+                          height: 25.0,
+                          image: AssetImage('assets/images/tomato.png'),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Container(
+                        child: Text(
+                          '68%',
+                          style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 8.0,
                   ),
                   Text(
                     'In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker.',

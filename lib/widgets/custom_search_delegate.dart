@@ -46,7 +46,7 @@ class CustomSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty ? recentMovies : movies;
+    // final suggestionList = query.isEmpty ? recentMovies : movies;
 
     return ListView.builder(
       itemCount: movies.length,

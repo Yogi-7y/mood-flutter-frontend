@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mood_frontend/constants/constants.dart';
 import 'package:mood_frontend/screens/home_screen.dart';
+import 'package:mood_frontend/widgets/genre_horizontal_bar.dart';
 import 'package:mood_frontend/widgets/movie_hero_card.dart';
+import 'package:mood_frontend/widgets/movie_list.dart';
 import '../widgets/custom_search_delegate.dart';
 
 class MoviesScreen extends StatelessWidget {
@@ -46,21 +48,9 @@ class MoviesScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: Column(
-            children: <Widget>[
-              Container(
-                child: MoviesHeroCard(),
-              ),
-              Container(
-                color: Color(0xFFBF5542),
-              ),
-              Container(
-                color: Color(0xFFE1030E),
-              ),
-            ],
-          )),
+      body: Column(
+        children: <Widget>[MoviesHeroCard(), GenreHorizontalBar(), MovieList()],
+      ),
     );
   }
 }
