@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mood_frontend/constants/constants.dart';
 import 'package:mood_frontend/screens/home_screen.dart';
 import 'package:mood_frontend/widgets/genre_horizontal_bar.dart';
-import 'package:mood_frontend/widgets/movie_hero_card.dart';
 import 'package:mood_frontend/widgets/movie_list.dart';
+
+import 'package:mood_frontend/widgets/popular_movies_list.dart';
 import '../widgets/custom_search_delegate.dart';
 
 class MoviesScreen extends StatefulWidget {
@@ -56,13 +57,11 @@ class _MoviesScreenState extends State<MoviesScreen> {
       ),
       body: Column(
         children: <Widget>[
-          Expanded(flex: 5, child: MoviesHeroCard()),
+          Expanded(flex: 5, child: PopularMoviesList()),
           Expanded(flex: 2, child: GenreHorizontalBar()),
-          Expanded(flex: 7, child: MovieList())
+          Expanded(flex: 7, child: MovieList()),
         ],
       ),
-      // body: ListView(
-      //   children: <Widget>[MoviesHeroCard(), GenreHorizontalBar()],
     );
   }
 }

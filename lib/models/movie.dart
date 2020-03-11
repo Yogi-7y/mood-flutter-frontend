@@ -4,7 +4,7 @@ class Movie {
   String year;
   String releaseDate;
   String runtime;
-  List<String> genres;
+  List<String> genre;
   String writer;
   String actors;
   String plot;
@@ -20,7 +20,7 @@ class Movie {
     this.actors,
     this.awards,
     this.country,
-    this.genres,
+    this.genre,
     this.imdbId,
     this.imdbRating,
     this.language,

@@ -89,7 +89,6 @@ class SongProvider extends ChangeNotifier {
   }
 
   fillTopSongsPlaylist() async {
-    print('top songs playlist');
     String url = '$POPULAR_MUSIC_BASE_URL$TOP_SONGS_PLAYLIST';
     http.Response response = await http.get(url);
     var tracks = jsonDecode(response.body)['tracks']['data'];
@@ -106,7 +105,6 @@ class SongProvider extends ChangeNotifier {
   }
 
   fillSadSongsPlaylist() async {
-    print('sad songs playlist');
     String url = '$POPULAR_MUSIC_BASE_URL$SAD_SONGS_PLAYLIST';
     http.Response response = await http.get(url);
     var tracks = jsonDecode(response.body)['tracks']['data'];
@@ -123,7 +121,6 @@ class SongProvider extends ChangeNotifier {
   }
 
   fillHappySongsPlaylist() async {
-    print('sad songs playlist');
     String url = '$POPULAR_MUSIC_BASE_URL$HAPPY_SONGS_PLAYLIST';
     http.Response response = await http.get(url);
     var tracks = jsonDecode(response.body)['tracks']['data'];
@@ -140,7 +137,6 @@ class SongProvider extends ChangeNotifier {
   }
 
   fillSleepySongsPlaylist() async {
-    print('sad songs playlist');
     String url = '$POPULAR_MUSIC_BASE_URL$SLEEPY_SONGS_PLAYLIST';
     http.Response response = await http.get(url);
     var tracks = jsonDecode(response.body)['tracks']['data'];

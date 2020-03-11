@@ -3,11 +3,35 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mood_frontend/widgets/genre.dart';
 
 class MoviesHeroCard extends StatelessWidget {
+  final title;
+  final imdbId;
+  final year;
+  final previewImage;
+  final imdbRating;
+  final rottenTomatoRating;
+  final runtime;
+  final language;
+  final plot;
+  final genres;
+
+  MoviesHeroCard(
+      {this.imdbId,
+      this.genres,
+      this.imdbRating,
+      this.language,
+      this.plot,
+      this.previewImage,
+      this.rottenTomatoRating,
+      this.runtime,
+      this.title,
+      this.year});
+
   @override
   Widget build(BuildContext context) {
-    // final width = MediaQuery.of(context).size.width;
-    // final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Container(
+      width: width,
       child: Row(
         children: <Widget>[
           Expanded(
@@ -19,16 +43,15 @@ class MoviesHeroCard extends StatelessWidget {
               //     style: TextStyle(color: Colors.white),
               //   ),
               // ),
-              // width: width * 0.4,
-              // height: height * 0.32,
+              width: width * 0.4,
+              height: height * 0.32,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(color: Colors.grey, blurRadius: 5.0),
                 ],
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage(
-                      'https://m.media-amazon.com/images/M/MV5BNGVjNWI4ZGUtNzE0MS00YTJmLWE0ZDctN2ZiYTk2YmI3NTYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+                  image: NetworkImage(previewImage),
                 ),
                 borderRadius: BorderRadius.all(
                   Radius.circular(8.0),
@@ -45,26 +68,31 @@ class MoviesHeroCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Container(
+                    // width: MediaQuery.of(context).size.width * 0.6,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.baseline,
                       textBaseline: TextBaseline.alphabetic,
                       children: <Widget>[
-                        Text(
-                          'Joker',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 34.0,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        Text(
-                          '(2019)',
-                          style: TextStyle(
-                              color: Colors.white.withOpacity(.7),
-                              fontSize: 20.0),
-                        )
+                        // SizedBox(
+                        //   width: 8.0,
+                        // ),
+                        // Text(
+                        //   year,
+                        //   style: TextStyle(
+                        //       color: Colors.white.withOpacity(.7),
+                        //       fontSize: 20.0),
+                        // )
                       ],
                     ),
                   ),
@@ -73,7 +101,7 @@ class MoviesHeroCard extends StatelessWidget {
                   ),
                   Container(
                     child: RatingBar(
-                      initialRating: 3,
+                      initialRating: double.parse(imdbRating) / 2,
                       minRating: 1,
                       itemSize: 20.0,
                       direction: Axis.horizontal,
@@ -89,7 +117,7 @@ class MoviesHeroCard extends StatelessWidget {
                     ),
                   ),
                   GenresWidget(
-                    geners: ['hey', 'hii', 'hello', 'whats up?'],
+                    geners: genres,
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 10.0),
@@ -97,7 +125,7 @@ class MoviesHeroCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          'English',
+                          language,
                           style: TextStyle(color: Colors.white, fontSize: 16.0),
                         ),
                         SizedBox(
@@ -111,7 +139,7 @@ class MoviesHeroCard extends StatelessWidget {
                           width: 6.0,
                         ),
                         Text(
-                          '122 min',
+                          runtime,
                           style: TextStyle(color: Colors.white),
                         ),
                       ],
@@ -131,7 +159,7 @@ class MoviesHeroCard extends StatelessWidget {
                       ),
                       Container(
                         child: Text(
-                          '68%',
+                          rottenTomatoRating,
                           style: TextStyle(color: Colors.white, fontSize: 20.0),
                         ),
                       )
@@ -141,8 +169,8 @@ class MoviesHeroCard extends StatelessWidget {
                     height: 8.0,
                   ),
                   Text(
-                    'In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker.',
-                    maxLines: 3,
+                    plot,
+                    maxLines: title.toString().length > 22 ? 2 : 3,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.white.withOpacity(.7)),
                   )

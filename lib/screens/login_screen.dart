@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:mood_frontend/screens/home_screen.dart';
 import 'package:mood_frontend/widgets/button_form.dart';
@@ -7,7 +5,7 @@ import 'package:mood_frontend/widgets/form_caption_link.dart';
 import 'package:mood_frontend/widgets/form_container.dart';
 import 'package:mood_frontend/widgets/input_field_form.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import '../animations/teddy_controller.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -23,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final usernameController = TextEditingController();
   final isUsernameFocused = FocusNode();
   String animationType = 'idle';
-  final _auth = FirebaseAuth.instance;
+  // final _auth = FirebaseAuth.instance;
   bool showSpinner = false;
   String email, password;
   TeddyController _teddyController;
@@ -146,24 +144,25 @@ class _LoginScreenState extends State<LoginScreen> {
               buttonWidth: 120.0,
               onButtonClick: () async {
                 try {
-                  await _auth
-                      .signInWithEmailAndPassword(
-                          email: email, password: password)
-                      .then(
-                    (_) {
-                      _teddyController.success();
-                      Timer(
-                        Duration(seconds: 2),
-                        () {
-                          Navigator.popAndPushNamed(context, HomeScreen.id);
-                        },
-                      );
-                    },
-                  ).catchError(
-                    (onError) {
-                      _teddyController.fail();
-                    },
-                  );
+                  Navigator.popAndPushNamed(context, HomeScreen.id);
+                  // await _auth
+                  //     .signInWithEmailAndPassword(
+                  //         email: email, password: password)
+                  //     .then(
+                  //   (_) {
+                  //     _teddyController.success();
+                  //     Timer(
+                  //       Duration(seconds: 2),
+                  //       () {
+                  //         Navigator.popAndPushNamed(context, HomeScreen.id);
+                  //       },
+                  //     );
+                  //   },
+                  // ).catchError(
+                  //   (onError) {
+                  //     _teddyController.fail();
+                  //   },
+                  // );
                 } catch (e) {
                   _teddyController.fail();
                   print(e);

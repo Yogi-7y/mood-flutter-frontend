@@ -9,6 +9,7 @@ class MovieList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 100.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -26,22 +27,25 @@ class MovieList extends StatelessWidget {
           ),
           Consumer<MovieProvider>(
             builder: (context, movieData, child) {
-              print('length: ${movieData.topPopularMovies.length}');
+              print('length: ${movieData.moviesByGenre.length}');
               return Expanded(
                 child: ListView.builder(
-                  reverse: true,
+                  reverse: false,
                   scrollDirection: Axis.vertical,
-                  itemCount: movieData.topPopularMovies.length,
+                  itemCount: movieData.moviesByGenre.length,
                   itemBuilder: (BuildContext context, int index) {
-                    Movie movie = movieData.topPopularMovies[index] as Movie;
+                    Movie movie = movieData.moviesByGenre[index] as Movie;
                     final _imdbRating = double.parse(movie.imdbRating);
 
                     return MovieListItem(
                       imdbRating: _imdbRating / 2,
                       title: movie.title,
                       previewImage: movie.poster,
-                      genreList: movie.genres,
+                      genreList: movie.genre,
                       rottenTomatosRating: movie.rottenTomatoRatings,
+                      onClick: () {
+                        print('movie name: ${movie.title}');
+                      },
                     );
                   },
                 ),

@@ -1,5 +1,5 @@
-const MOVIES_ID_BASE_URL = 'http://moodrestapi.herokuapp.com/rest-apis/movies/';
-const popularMovies = 'popular';
+const MOVIES_ID_BASE_URL = 'http://moodrestapi.herokuapp.com/rest-apis/movies';
+const moviesPopularPath = '/popular';
 
 const API_KEY = '86b044aa';
 const MOVIES_BASE_URL = 'http://www.omdbapi.com/?apikey=$API_KEY&';
