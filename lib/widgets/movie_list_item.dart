@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mood_frontend/widgets/genre.dart';
-import 'package:mood_frontend/widgets/star_display_widget.dart';
 
 class MovieListItem extends StatelessWidget {
+  final title;
+  final previewImage;
+  final genreList;
+  final rottenTomatosRating;
+  final imdbRating;
+
+  MovieListItem({
+    this.title,
+    this.imdbRating,
+    this.genreList,
+    this.previewImage,
+    this.rottenTomatosRating,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,12 +30,12 @@ class MovieListItem extends StatelessWidget {
                   height: 90.0,
                   width: 90.0,
                   child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Image(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                            'https://m.media-amazon.com/images/M/MV5BYzE5MjY1ZDgtMTkyNC00MTMyLThhMjAtZGI5OTE1NzFlZGJjXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg'),
-                      )),
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(previewImage),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -32,7 +46,7 @@ class MovieListItem extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.4,
                   child: Text(
-                    'Deadpool',
+                    title,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: Colors.white,
@@ -43,19 +57,34 @@ class MovieListItem extends StatelessWidget {
                 SizedBox(height: 4.0),
                 Row(
                   children: <Widget>[
-                    StarDisplayWidget(
-                      filledStar: Icon(
+                    RatingBar(
+                      initialRating: imdbRating,
+                      minRating: 1,
+                      itemSize: 20.0,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemBuilder: (context, _) => Icon(
                         Icons.star,
-                        color: Colors.yellow,
-                        size: 22,
+                        color: Colors.amber,
                       ),
-                      unfilledStar: Icon(
-                        Icons.star_border,
-                        color: Colors.grey,
-                        size: 22,
-                      ),
-                      value: 3,
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                      },
                     ),
+                    // StarDisplayWidget(
+                    //   filledStar: Icon(
+                    //     Icons.star,
+                    //     color: Colors.yellow,
+                    //     size: 22,
+                    //   ),
+                    //   unfilledStar: Icon(
+                    //     Icons.star_border,
+                    //     color: Colors.grey,
+                    //     size: 22,
+                    //   ),
+                    //   value: 4,
+                    // ),
                     SizedBox(
                       width: 10.0,
                     ),
@@ -73,9 +102,10 @@ class MovieListItem extends StatelessWidget {
                         ),
                         Container(
                           child: Text(
-                            '68%',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 20.0),
+                            '$rottenTomatosRating',
+                            style: TextStyle(
+                                color: Colors.white.withOpacity(.9),
+                                fontSize: 20.0),
                           ),
                         )
                       ],
@@ -83,7 +113,9 @@ class MovieListItem extends StatelessWidget {
                   ],
                 ),
 
-                GenresWidget(),
+                GenresWidget(
+                  geners: genreList,
+                ),
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 //   children: <Widget>[

@@ -104,25 +104,31 @@ class _ChatScreenState extends State<ChatScreen> {
                       messageTextController.clear();
                       print(
                           'logged user email: ${loggedInUser.email} \n $messageText');
-                      _firestore.collection('messages').add({
-                        'text': messageText,
-                        'sender': loggedInUser.email,
-                        // 'date': DateTime.now().toIso8601String().toString()
-                        'date': FieldValue.serverTimestamp()
-                      });
+                      _firestore.collection('messages').add(
+                        {
+                          'text': messageText,
+                          'sender': loggedInUser.email,
+                          // 'date': DateTime.now().toIso8601String().toString()
+                          'date': FieldValue.serverTimestamp()
+                        },
+                      );
                       chatbotReply = await chatbotPostMethod(
                           'https://moodrestapi.herokuapp.com/rest-apis/rest-get/',
                           {'message': '$messageText'});
 
-                      _firestore.collection(collectionName).add({
-                        'text': chatbotReply.reply,
-                        'sender': 'bot',
-                        'date': FieldValue.serverTimestamp()
-                      });
+                      _firestore.collection(collectionName).add(
+                        {
+                          'text': chatbotReply.reply,
+                          'sender': 'bot',
+                          'date': FieldValue.serverTimestamp()
+                        },
+                      );
 
-                      chatbotReply.tones.forEach((var t) {
-                        print(t);
-                      });
+                      chatbotReply.tones.forEach(
+                        (var t) {
+                          print(t);
+                        },
+                      );
                     },
                     // child: Text(
                     //   'Send',

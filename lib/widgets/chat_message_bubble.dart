@@ -37,7 +37,7 @@ class ChatMessageBubble extends StatelessWidget {
                       topRight: Radius.circular(30.0),
                     ),
               elevation: 5.0,
-              color: isMe ? Colors.red : Colors.white,
+              color: isMe ? Colors.purpleAccent : Colors.white,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                 child: Text(

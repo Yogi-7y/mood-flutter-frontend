@@ -98,7 +98,7 @@ class SongProvider extends ChangeNotifier {
         Song(
             artist: tracks[i]['artist']['name'],
             title: tracks[i]['title'],
-            image: tracks[i]['album']['cover_xl'],
+            image: tracks[i]['album']['cover_medium'],
             preview: tracks[i]['preview'],
             duration: tracks[i]['duration']),
       );
@@ -115,7 +115,7 @@ class SongProvider extends ChangeNotifier {
         Song(
             artist: tracks[i]['artist']['name'],
             title: tracks[i]['title'],
-            image: tracks[i]['album']['cover_xl'],
+            image: tracks[i]['album']['cover_medium'],
             preview: tracks[i]['preview'],
             duration: tracks[i]['duration']),
       );
@@ -132,7 +132,7 @@ class SongProvider extends ChangeNotifier {
         Song(
             artist: tracks[i]['artist']['name'],
             title: tracks[i]['title'],
-            image: tracks[i]['album']['cover_xl'],
+            image: tracks[i]['album']['cover_medium'],
             preview: tracks[i]['preview'],
             duration: tracks[i]['duration']),
       );
@@ -149,7 +149,7 @@ class SongProvider extends ChangeNotifier {
         Song(
             artist: tracks[i]['artist']['name'],
             title: tracks[i]['title'],
-            image: tracks[i]['album']['cover_xl'],
+            image: tracks[i]['album']['cover_medium'],
             preview: tracks[i]['preview'],
             duration: tracks[i]['duration']),
       );

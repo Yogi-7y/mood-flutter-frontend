@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mood_frontend/widgets/genre.dart';
-import 'package:mood_frontend/widgets/star_display_widget.dart';
 
 class MoviesHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+    // final width = MediaQuery.of(context).size.width;
+    // final height = MediaQuery.of(context).size.height;
     return Container(
       child: Row(
         children: <Widget>[
           Expanded(
-            flex: 5,
+            flex: 3,
             child: Container(
-              width: width * 0.4,
-              height: height * 0.35,
+              // child: Center(
+              //   child: Text(
+              //     'hey',
+              //     style: TextStyle(color: Colors.white),
+              //   ),
+              // ),
+              // width: width * 0.4,
+              // height: height * 0.32,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(color: Colors.grey, blurRadius: 5.0),
@@ -31,7 +37,7 @@ class MoviesHeroCard extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 6,
+            flex: 5,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: Column(
@@ -63,24 +69,28 @@ class MoviesHeroCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 10.0,
+                    height: 4.0,
                   ),
                   Container(
-                    child: StarDisplayWidget(
-                      filledStar: Icon(
+                    child: RatingBar(
+                      initialRating: 3,
+                      minRating: 1,
+                      itemSize: 20.0,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemBuilder: (context, _) => Icon(
                         Icons.star,
-                        color: Colors.yellow,
-                        size: 26,
+                        color: Colors.amber,
                       ),
-                      unfilledStar: Icon(
-                        Icons.star_border,
-                        color: Colors.grey,
-                        size: 26,
-                      ),
-                      value: 3,
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                      },
                     ),
                   ),
-                  GenresWidget(),
+                  GenresWidget(
+                    geners: ['hey', 'hii', 'hello', 'whats up?'],
+                  ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 10.0),
                     child: Row(
@@ -132,7 +142,7 @@ class MoviesHeroCard extends StatelessWidget {
                   ),
                   Text(
                     'In Gotham City, mentally troubled comedian Arthur Fleck is disregarded and mistreated by society. He then embarks on a downward spiral of revolution and bloody crime. This path brings him face-to-face with his alter-ego: the Joker.',
-                    maxLines: 4,
+                    maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.white.withOpacity(.7)),
                   )

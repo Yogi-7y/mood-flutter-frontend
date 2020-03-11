@@ -6,8 +6,14 @@ import 'package:mood_frontend/widgets/movie_hero_card.dart';
 import 'package:mood_frontend/widgets/movie_list.dart';
 import '../widgets/custom_search_delegate.dart';
 
-class MoviesScreen extends StatelessWidget {
+class MoviesScreen extends StatefulWidget {
   static String id = 'movies_screen';
+
+  @override
+  _MoviesScreenState createState() => _MoviesScreenState();
+}
+
+class _MoviesScreenState extends State<MoviesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,8 +55,14 @@ class MoviesScreen extends StatelessWidget {
         ],
       ),
       body: Column(
-        children: <Widget>[MoviesHeroCard(), GenreHorizontalBar(), MovieList()],
+        children: <Widget>[
+          Expanded(flex: 5, child: MoviesHeroCard()),
+          Expanded(flex: 2, child: GenreHorizontalBar()),
+          Expanded(flex: 7, child: MovieList())
+        ],
       ),
+      // body: ListView(
+      //   children: <Widget>[MoviesHeroCard(), GenreHorizontalBar()],
     );
   }
 }

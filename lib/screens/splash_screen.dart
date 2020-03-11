@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mood_frontend/providers/movies_provider.dart';
 import 'package:mood_frontend/screens/login_screen.dart';
 import 'package:mood_frontend/widgets/caption_text.dart';
 import 'package:mood_frontend/widgets/splash_screen_gradient.dart';
@@ -177,6 +178,9 @@ class _SplashScreenState extends State<SplashScreen>
                                   onTap: () {},
                                   child: InkWell(
                                     onTap: () {
+                                      Provider.of<MovieProvider>(context,
+                                              listen: false)
+                                          .fillTopPopularMoviesId();
                                       Provider.of<SongProvider>(context,
                                               listen: false)
                                           .fillTopSongsPlaylist();
