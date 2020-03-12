@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mood_frontend/providers/movies_provider.dart';
+import 'package:mood_frontend/screens/movie_details_screen.dart';
 import 'package:mood_frontend/widgets/movie_hero_card.dart';
 import 'package:provider/provider.dart';
 import '../models/movie.dart';
@@ -27,6 +28,17 @@ class PopularMoviesList extends StatelessWidget {
                 runtime: movie.runtime,
                 title: movie.title,
                 year: movie.year,
+                onClick: () {
+                  print('movie title: ${movie.title}');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MovieDetailsScreen(
+                        movie: movie,
+                      ),
+                    ),
+                  );
+                },
               );
             },
           ),

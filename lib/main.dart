@@ -30,7 +30,7 @@ void main() => runApp(
             ChatScreen.id: (context) => ChatScreen(),
             HomeScreen.id: (context) => HomeScreen(),
             MoviesScreen.id: (context) => MoviesScreen(),
-            ImagePickerScreen.id: (context) => ImagePickerScreen()
+            ImagePickerScreen.id: (context) => ImagePickerScreen(),
           },
         ),
       ),

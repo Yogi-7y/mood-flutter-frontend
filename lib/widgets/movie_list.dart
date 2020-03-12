@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:mood_frontend/widgets/hero_text.dart';
 import 'package:provider/provider.dart';
 import '../providers/movies_provider.dart';
@@ -45,6 +46,12 @@ class MovieList extends StatelessWidget {
                       rottenTomatosRating: movie.rottenTomatoRatings,
                       onClick: () {
                         print('movie name: ${movie.title}');
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => MovieDetailsPage(movie),
+                        //   ),
+                        // );
                       },
                     );
                   },
